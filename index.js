@@ -9,6 +9,7 @@ const typeDefs = gql`
     date(message:String!): String
     count(message: String!): String
     hour(message: String!): String
+    reverse(message: String!): String
   }
 `;
 
@@ -44,11 +45,16 @@ const resolvers = {
     hour: (_, { message }) => {
       // crea un nuevo objeto `Date`
       var today = new Date();
-  
+      
       // obtener la hora en la configuración regional de EE. UU.
       var now = today.toLocaleTimeString('en-US');
       
       return `¡Hola, ${message}! La hora actual es ${now}`;
+    },
+    reverse: (_, { message }) => {
+      let arrStr = (message).split("");
+      let newWord = (arrStr.reverse().join("")).toUpperCase()
+      return `¡Hola, ${message}! Tu nombre al revés es ${newWord}`;
     },
   },
 };
