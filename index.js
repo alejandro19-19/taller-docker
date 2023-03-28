@@ -6,6 +6,7 @@ const path = require('path');
 const typeDefs = gql`
   type Query {
     hello(message: String!): String
+    date(message:String!): String
   }
 `;
 
@@ -15,6 +16,25 @@ const resolvers = {
     hello: (_, { message }) => {
         return `¡Hola, ${message}! Un saludo por parte del profe `;
       },
+    date:(_, { message }) => {
+      
+      // crea un nuevo objeto `Date`
+      var today = new Date();
+
+      // `getDate()` devuelve el día del mes (del 1 al 31)
+      var day = today.getDate();
+
+      // `getMonth()` devuelve el mes (de 0 a 11)
+      var month = today.getMonth() + 1;
+
+      // `getFullYear()` devuelve el año completo
+      var year = today.getFullYear();
+
+      var formato = `${day}/${month}/${year}`
+      // muestra la fecha de hoy en formato `MM/DD/YYYY`
+
+      return `¡Hola, ${message}! hoy es ${formato}`;
+    },
   },
 };
 
