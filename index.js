@@ -7,6 +7,7 @@ const typeDefs = gql`
   type Query {
     hello(message: String!): String
     date(message:String!): String
+    count(message: String!): String
   }
 `;
 
@@ -34,6 +35,10 @@ const resolvers = {
       // muestra la fecha de hoy en formato `MM/DD/YYYY`
 
       return `¡Hola, ${message}! hoy es ${formato}`;
+    },
+    count: (_, { message }) => {
+      count = message.length
+      return `¡Hola, ${message}! Tu nombre tiene ${count} caracteres`;
     },
   },
 };
