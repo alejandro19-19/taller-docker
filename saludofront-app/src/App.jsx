@@ -22,6 +22,11 @@ const COUNT_QUERY = gql`
     count(message: $message)
   }
 `;
+const HOUR_QUERY = gql`
+  query Hour($message: String!) {
+    hour(message: $message)
+  }
+`;
 
 function Hello() {
   const [message, setMessage] = useState('');
@@ -119,6 +124,38 @@ function Count() {
   );
 }
 
+function Hour() {
+  const [message, setMessage] = useState('');
+  const [getGreeting, { loading, error, data }] = useLazyQuery(HOUR_QUERY);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getGreeting({ variables: { message } });
+  };
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return (
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formMessage">
+          <Form.Control
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Escribe tu mensaje"
+          />
+        </Form.Group>
+        <Button className='mt-2' variant="primary" type="submit">
+          Enviar
+        </Button>
+      </Form>
+      {data && <h2 className='mt-3'>{data.hour}</h2>}
+    </div>
+  );
+}
+
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -138,6 +175,11 @@ function App() {
             <h3>Feature de Alejandro Escobar</h3>
             <div>
               <Count />
+            </div>
+            <br></br>
+            <h3>Feature de Juan Camilo Santa</h3>
+            <div>
+              <Hour />
             </div>
           </Col>
         </Row>

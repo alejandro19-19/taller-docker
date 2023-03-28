@@ -8,6 +8,7 @@ const typeDefs = gql`
     hello(message: String!): String
     date(message:String!): String
     count(message: String!): String
+    hour(message: String!): String
   }
 `;
 
@@ -39,6 +40,15 @@ const resolvers = {
     count: (_, { message }) => {
       count = message.length
       return `¡Hola, ${message}! Tu nombre tiene ${count} caracteres`;
+    },
+    hour: (_, { message }) => {
+      // crea un nuevo objeto `Date`
+      var today = new Date();
+  
+      // obtener la hora en la configuración regional de EE. UU.
+      var now = today.toLocaleTimeString('en-US');
+      
+      return `¡Hola, ${message}! La hora actual es ${now}`;
     },
   },
 };
